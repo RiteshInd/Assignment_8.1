@@ -1,0 +1,101 @@
+1. Use the below given data set
+DataSet: https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset
+a. Predict the no of comments in next H hrs
+b. Use regression technique
+c. Report the training accuracy and test accuracy
+
+
+library(readr) 
+Features_Variant_1 <- read.csv("C:/users/seshan/Documents/Dataset/Dataset/Training/Features_Variant_1.csv") 
+dim(Features_Variant_1)
+
+Features<-Features_Variant_1 
+names(Features)
+head(Features)
+
+str(Features)
+
+normalize<-function(x) {return((x-min(x))/(max(x)-min(x)))} 
+Features_norm<-as.data.frame(lapply(Features,normalize)) 
+Features_norm
+
+
+names(Features_norm)
+Features_Train<-Features_norm[1:28003,] 
+Features_Test<-Features_norm[28004:40948,] 
+library(neuralnet) 
+set.seed(123) 
+Features_model<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642+X0.0.2+X69.435826365571+X0.0.3+X76.0+X2.6044776119402986+X0.0.4+X8.50550186882253+X0.0.5+X806.0.2+X10.649253731343284+X1.0.1+X70.25478763764251+X.69.0+X806.0.3+X4.970149253731344,data = Features_Train) 
+
+plot(Features_model)
+model_results<-compute(Features_model,Features_Test[1:27]) 
+predicted_X0.19<-model_results$net.result 
+nrow(predicted_X0.19)
+
+head(predicted_X0.19)
+round(cor( predicted_X0.19,Features_Test$X0.19),2)
+
+Features_model<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642,data = Features_Train) 
+
+plot(Features_model) 
+model_results<-compute(Features_model,Features_Test[1:12]) 
+predicted_X0.19<-model_results$net.result 
+nrow(predicted_X0.19)
+
+head(predicted_X0.19)
+
+round(cor( predicted_X0.19,Features_Test$X0.19),2)
+
+set.seed(123) 
+
+Features_model2<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642,data = Features_Train, hidden = 5) 
+
+plot(Features_model2)
+
+model_results2<-compute(Features_model2,Features_Test[1:12]) 
+
+predicted_X0.192<-model_results2$net.result 
+nrow(predicted_X0.192)
+
+
+head(predicted_X0.192)
+
+round(cor( predicted_X0.192,Features_Test$X0.19),2)
+
+
+set.seed(123)
+Features_model<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642+X0.0.2+X69.435826365571+X0.0.3+X76.0+X2.6044776119402986+X0.0.4+X8.50550186882253+X0.0.5+X806.0.2+X10.649253731343284+X1.0.1+X70.25478763764251+X.69.0+X806.0.3+X4.970149253731344,data = Features_Train)
+
+plot(Features_model)
+
+set.seed(123)
+
+Features_model2<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642+X0.0.2+X69.435826365571+X0.0.3+X76.0+X2.6044776119402986+X0.0.4+X8.50550186882253+X0.0.5+X806.0.2+X10.649253731343284+X1.0.1+X70.25478763764251+X.69.0+X806.0.3+X4.970149253731344,data = Features_Train, hidden = 5)
+
+plot(Features_model2)
+
+#Lower association model1
+set.seed(123)
+Features_model<-neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642,data = Features_Train)
+plot(Features_model)
+
+
+set.seed(123)
+Features_model2<- neuralnet(X0.19~X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0 +X70.49513846124168+X0.0.1+X806.0.1+X7.574626865671642,data = Features_Train, hidden = 5)
+plot(Features_model2)
+
+
+0.32 is lower than the model1 (0.34) and the previous one is better Given below selection provides better correlation (0.65)
+
+set.seed(123)
+
+Features_model<-neuralnet(X0_19~ X634995+X0+X463+X1+X0.0+X806.0+X11.291044776119403+X1.0+X70.49513846124168+X0.0_1+X806.0_1+X7.574626865671642+X0.0_2+X69.435826365571+X0.0_3+X76.0+X2.6044776119402986+X0.0_4+X8.50550186882253+X0.0_5+X806.0_2+X10.649253731343284+X1.0_1+X70.25478763764251+X.69.0+X806.0_3+X4.970149253731344+X0.0_6+X69.85058043098057+X0_1+X0_2+X0_3+X0_4+X0_5+X65+X166+X2,data = 
+Features_Train)
+
+plot(Features_model)
+
+model_results<-compute(Features_model,Features_Test[1:37])
+predicted_X0_19<-model_results$net.result
+nrow(predicted_X0_19)
+head(predicted_X0_19)
+round(cor( predicted_X0_19,Features_Test$X0_19),2)
